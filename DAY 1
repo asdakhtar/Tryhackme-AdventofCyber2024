@@ -1,0 +1,29 @@
+DAY 1 - Task Summary
+We were given a suspicious song.mp3 file and asked to investigate its metadata using exiftool. The challenge also involved analyzing a malicious PowerShell script and performing OSINT on a mysterious figure named "M.M."
+
+ Step-by-Step Walkthrough
+1. Inspecting the MP3 File (USE THE MACHINE)
+exiftool song.mp3
+- Finding: The metadata revealed the author of the file as Tyler Ramsbey.
+Q1 Answer: Tyler Ramsbey
+
+2. Analyzing the Malicious PowerShell Script (THE GITHUB LINK)
+- The script was designed to exfiltrate data to a Command & Control (C2) server.
+- By reviewing the code, we identified the destination URL.
+Q2 Answer: C2 Server URL: http://papash3ll.thm/data
+
+3. OSINT Investigation: Who is M.M.?
+- The hint pointed us toward a GitHub profile.
+- Searching for "M.M." led us to Mayor Malware, a fictional persona used in the challenge.
+Q3 Answer: Mayor Malware
+
+4. GitHub Repo Analysis
+- We were asked to find the number of commits on the repo where the issue was raised.
+- After locating the repo, we found it had 1 commit.
+Q4 Answer: 1
+
+ Key Concepts Practiced
+- Metadata analysis with exiftool
+- PowerShell threat detection
+- OSINT techniques using GitHub
+- Basic C2 infrastructure identification
