@@ -1,0 +1,26 @@
+We investigated a surge in failed login attempts targeting the ADM-01 system in Wareville. 
+The challenge involved analyzing authentication logs, identifying the attacker, and decoding a PowerShell command used to restore the system.
+
+Step-by-Step Walkthrough
+1. Identifying the Account Behind Failed Logins
+- By analyzing the logs, we discovered that the account responsible for the failed login attempts was service_admin.
+- Q1 Answer: service_admin
+
+2. Counting the Failed Logon Attempts (event.category to authentication+ and event.outcome to failure+)
+- The logs revealed a total of 6791 failed login attempts.
+- Q2 Answer: 6791
+
+3. Tracing the Attacker’s IP Address (HOST.HOSTNAME=ADM-01)
+- The attacker, known as Glitch, was traced to the IP address 10.0.255.1.
+- Q3 Answer: 10.0.255.1
+
+4. Timestamp of Successful Logon to ADM-01 (event.category- authentication+, event.outcome- success+, and host.hostname to ADM-01+)
+- Glitch successfully logged into ADM-01 on Dec 1, 2024 at 08:54:39.000.
+- Q4 Answer: Dec 1, 2024 08:54:39.000
+
+5. Decoding the PowerShell Command Executed by Glitch
+- The decoded command used to fix the systems of Wareville was:
+- Q5 Answer: Install-WindowsUpdate -AcceptAll -AutoReboot
+
+
+
