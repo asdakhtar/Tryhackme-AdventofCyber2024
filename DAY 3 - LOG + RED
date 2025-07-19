@@ -22,8 +22,8 @@ Investigate Frosty Pines Resort's Elastic SIEM logs (Blue Team), then recreate t
 ### 🔐 Results:
 | Question | Answer |
 |---------|--------|
-| Where was the web shell uploaded? | `/media/images/rooms/shell.php` |
-| What IP accessed the shell? | `10.11.83.34` |
+1-| Where was the web shell uploaded? | `/media/images/rooms/shell.php` |
+2-| What IP accessed the shell? | `10.11.83.34` |
 
 ---
 
@@ -71,7 +71,7 @@ Execute commands like:
 
 ## 🏁 FLAG
 ```text
-THM{Gl1tch_Was_H3r3}
+3-THM{Gl1tch_Was_H3r3}
 ```
 
 ---
