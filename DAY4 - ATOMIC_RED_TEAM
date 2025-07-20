@@ -1,0 +1,51 @@
+# 🛡️ Day 4 – Execution via Windows Command Shell
+
+## 📌 Summary
+This challenge highlights the abuse of **Windows Command Shell (cmd.exe)** for malicious execution, focusing on spearphishing tactics and ransomware simulations. It demonstrates how adversaries use built-in tools to evade detection — a classic “living off the land” scenario.
+
+---
+
+## 🧩 Challenge Questions & Answers
+
+### 1️⃣ What was the flag found in the `.txt` file in the same directory as `PhishingAttachment.xslm`?
+> **Flag:** `THM{GlitchTestingForSpearphishing}`
+
+### 2️⃣ What MITRE ATT&CK technique ID is relevant to this activity?
+> **Technique ID:** `T1059`  
+> **Technique Name:** Command and Scripting Interpreter  
+> **Tactic:** Execution
+
+### 3️⃣ What ATT&CK subtechnique ID focuses on Windows Command Shell?
+> **Subtechnique ID:** `T1059.003`  
+> **Subtechnique Name:** Windows Command Shell
+
+---
+
+## 🧪 Atomic Red Team Simulation
+
+### 🧨 Simulated Attack
+> **Atomic Test Name:** Simulate BlackByte Ransomware Print Bombing
+
+### 4️⃣ Artefact Used
+> **Test File:** `Wareville_Ransomware.txt`
+
+### 5️⃣ Flag Found from Test
+> **Flag:** `THM{R2xpdGNoIGlzIG5vdCB0aGUgZW5lbXk=}`  
+> *(Base64 translates to “Glitch is not the enemy”)*
+
+---
+
+## 🛠️ MITRE ATT&CK Mapping Summary
+
+| Stage         | Technique                     | ID        |
+|---------------|-------------------------------|-----------|
+| Execution     | Command and Scripting Interpreter | T1059     |
+| Execution     | Windows Command Shell          | T1059.003 |
+
+---
+
+## 📘 Notes
+- The use of `.xslm` and hidden text files is typical of phishing payload delivery.
+
+---
+
