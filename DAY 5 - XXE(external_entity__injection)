@@ -1,0 +1,49 @@
+# 🎄 Advent of Cyber — Day 5: Wishes and Backdoors
+
+## 🔍 Objective
+Identify two flags hidden behind login mechanisms and suspicious behaviors using web traffic analysis.
+
+---
+
+## 🧪 Tools Used
+- 🛠️ Burp Suite Community Edition
+- 🦊 Firefox (with manual proxy)
+- 🔐 TryHackMe target machine
+
+---
+
+## 🎯 Flags Found
+
+### ✅ 1. Flag discovered after navigating through the wishes:
+ANSWER-THM{Brut3f0rc1n6_mY_w4y}
+
+
+### ✅ 2. Flag seen on the possible proof of sabotage:
+ANSWER-THM{m4y0r_m4lw4r3_b4ckd00rs}
+
+
+
+---
+
+## 💡 Why I Ran This on My Ubuntu VM Instead of the AttackBox
+
+TryHackMe’s AttackBox browser failed to send POST requests reliably during form-based interactions, possibly due to resource or network constraints.
+
+Additionally:
+- Burp Suite's embedded browser didn’t render pages or intercept properly within AttackBox.
+- My local Ubuntu VM offers persistent tooling, faster response time, and full control over traffic, storage, and configuration.
+- Using OpenVPN, I securely connected to the TryHackMe lab environment and routed Firefox through Burp to analyze traffic without limitation.
+
+This approach gave me precision, stability, and a flexible debugging workflow.
+
+---
+
+## 📁 Notes
+- All intercepted traffic was captured via Burp and verified using `Repeater` and `Proxy` tabs.
+- Proxy configuration was manually set in Firefox with Burp listener active on `127.0.0.1:8080`.
+- Additional cleanup scripts were used to free disk space for Burp’s launch and temp storage.
+
+---
+
+
+
