@@ -1,0 +1,28 @@
+# Advent of Cyber 2025 – Day 6 🎄  
+**Challenge:** EDR & Malware Analysis  
+
+---
+
+## 🛡️ Task Summary  
+Today’s challenge involved interacting with a simulated endpoint detection & response (EDR) tool to analyze a malicious executable: `MerryChristmas.exe`.
+
+Tools used:  
+- `floss.exe` from the FLARE VM toolkit  
+- PowerShell for command execution and output redirection
+
+---
+
+## 📌 Questions & Answers
+
+### 1. What is the flag displayed in the popup window after the EDR detects the malware?  
+**Answer:** `THM{GlitchWasHere}`
+
+### 2. What is the flag found in the malstrings.txt document after running floss.exe, and opening the file in a text editor?  
+**Answer:** `THM{HiddenClue}`
+
+---
+
+## 🧠 Notes & Commands Used
+
+```powershell
+PS C:\Tools\FLOSS> .\floss.exe "C:\Tools\Malware\MerryChristmas.exe" | Out-File "C:\Tools\malstrings.txt"
