@@ -1,0 +1,43 @@
+# 🚨 Day 7: AWS Suspicious Activity Investigation
+
+## 🧠 Challenge Overview
+Analyzing AWS CloudTrail logs to identify suspicious actions by a rogue user (`glitch`) and uncover indicators of compromise.
+
+---
+
+## 🔍 Key Findings
+
+| Question | Answer |
+|---------|--------|
+| Other activity made by `glitch` aside from `ListObject` | `PutObject` |
+| Source IP related to S3 bucket activities | `53.94.201.69` |
+| AWS service generating `ConsoleLogin` events | `signin.amazonaws.com` |
+| Timestamp of `ConsoleLogin` by anomalous user | `2024-11-28T15:21:54Z` |
+| Name of user created by `mcskidy` | `glitch` |
+| Type of access assigned to anomalous user | `AdministratorAccess` |
+| Mayor Malware’s typical login IP | `53.94.201.69` |
+| McSkidy’s actual IP address | `31.210.15.79` |
+| Mayor Malware's bank account number | `2394 6912 7723 1294` |
+
+---
+
+## 🧪 Analysis Notes
+
+- `glitch` was granted high-level permissions (`AdministratorAccess`) and performed unauthorized S3 operations (`PutObject`).
+- Activity originated from IP `53.94.201.69`, tied to Mayor Malware’s typical login behavior.
+- Creation of `glitch` user from `mcskidy`’s account suggests insider threat or credential compromise.
+- Event logged via `signin.amazonaws.com`, helping isolate the service involved.
+- Use of CloudTrail logs allowed precise timestamping and attribution of anomalous access.
+
+---
+
+## 🛡️ Takeaway
+
+This challenge reinforces the importance of:
+- Regular IAM reviews and permission audits
+- Monitoring CloudTrail logs for behavioral anomalies
+- Flagging unusual resource activity patterns tied to specific IPs or users
+
+---
+
+
