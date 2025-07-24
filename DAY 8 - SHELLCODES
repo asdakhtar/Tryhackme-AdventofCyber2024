@@ -1,0 +1,38 @@
+# 🎯 Advent of Cyber 2025 – Day 8: Reverse Shell Restoration
+
+## 🧠 Scenario Summary
+Glitch's reverse shell has gone silent—his connection to the home base was hijacked. Mayor Malware’s minions have modified the shellcode, redirecting it to the wrong IP and port. Your mission is to patch the shellcode with the correct values and reestablish control over the digital vault.
+
+---
+
+## 🔍 Objective
+- Patch shellcode with:
+  - ✅ IP: `10.10.66.65`
+  - ✅ Port: `4444`
+- Start a Netcat listener.
+- Trigger the exploit.
+- Retrieve the flag after successfully gaining reverse shell access.
+
+---
+
+## ⚙️ Shellcode Patching
+
+### 🔢 Convert to Hex
+
+- IP: `10.10.66.65` → `0A 0A 42 41`
+- Port: `4444` → `11 5C` (Big-endian)
+
+> Use CyberChef or a hex editor to search for outdated IP and port bytes and replace them accordingly.
+
+### ✂️ Example CyberChef Workflow
+1. Paste raw shellcode into CyberChef.
+2. Locate old IP/port bytes.
+3. Replace with `0A0A4241` for IP and `115C` for port.
+4. Export and use the patched shellcode in your exploit.
+
+---
+
+## 📡 Listener Setup
+Run this on your AttackBox:
+```bash
+nc -lvnp 4444
