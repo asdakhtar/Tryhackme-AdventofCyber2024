@@ -1,0 +1,37 @@
+# 🧩 Advent of Cyber – Day 11: Wireless Forensics
+
+## 🎯 Overview
+Today's challenge explored wireless interfaces, BSSIDs, SSIDs, and WPA cracking techniques. All tasks were completed using the Ubuntu VM to stay grounded in CLI fundamentals and reinforce network analysis workflows.
+
+---
+
+## 🔍 Key Findings
+
+| Question                                                         | Answer                          |
+|------------------------------------------------------------------|---------------------------------|
+| What is the BSSID of our wireless interface?                    | `02:00:00:00:02:00`             |
+| What is the SSID and BSSID of the access point?                 | `MalwareM_AP`, `02:00:00:00:00:00` |
+| What is the BSSID of the wireless interface connected to the AP?| `02:00:00:00:01:00`             |
+| What is the PSK after performing the WPA cracking attack?       | `fluffy/champ24`                |
+
+---
+
+## 🛠️ Tools & Techniques Used
+- `aircrack-ng` for WPA cracking (dictionary attack)
+- `iwconfig` & `ifconfig` to inspect wireless interfaces
+- Packet capture inspection to identify SSIDs and BSSIDs
+- Ubuntu terminal for all commands to reinforce CLI skills
+
+---
+
+## 📘 Notes
+- Confirmed SSID visibility through beacon frames.
+- BSSID identification relied on MAC address matching across captured frames.
+- Cracking PSK required wordlist tuning and correct handshake capture.
+
+---
+
+## 💡 Reflection
+Keeping Wi-Fi security tight requires constant vigilance and awareness of encryption flaws. This exercise highlights how vulnerable default credentials and weak passphrases can be.
+
+_Logged and completed on Ubuntu VM to maintain foundational Linux skill fluency._
