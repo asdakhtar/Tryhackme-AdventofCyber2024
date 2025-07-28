@@ -1,0 +1,44 @@
+# 🎄 Advent of Cyber — Day 11: Race Conditions and Exploits
+
+## 🔍 Objective
+Demonstrate a race condition exploit to transfer funds and extract hidden data — specifically, triggering a logic flaw by submitting multiple requests in rapid succession.
+
+---
+
+## 🧪 Tools Used
+- 🛠️ Burp Suite Community Edition (local VM setup)
+- 🦊 Firefox with manual proxy routing
+- 💻 TryHackMe target machine
+- 🔁 Repeater tab in Burp Suite to simulate race condition
+
+---
+
+## 🎯 Flag Discovered
+
+### ✅ After transferring more than $2000 from Glitch’s account:
+THM{WON_THE_RACE_007}
+
+
+---
+
+## 📝 Important Note
+
+> ⚠️ **Don't forget to send more than `$2000` from Glitch’s account to trigger the flag.**  
+This action exploits a race condition and unlocks hidden server logic.
+
+---
+
+
+## 📁 Workflow Summary
+- Used Firefox routed through Burp
+- Intercepted fund transfer POST request
+- Crafted and replayed multiple rapid transactions using Repeater
+- Triggered the logic flaw by exceeding $2000 threshold
+- Captured the flag embedded in the server response
+
+---
+
+## 🚀 Next Steps
+- [ ] Document race condition workflow for portfolio
+- [ ] Explore timing-based attacks in upcoming labs
+- [ ] Extend Burp automation using Python or Turbo Intruder
