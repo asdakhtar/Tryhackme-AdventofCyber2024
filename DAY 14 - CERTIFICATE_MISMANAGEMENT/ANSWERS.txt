@@ -30,13 +30,6 @@
 5. Access the admin console and retrieve the final flag  
    
    - Flag: THM{AoC-h0wt0ru1nG1ftD4y}  
-
----
-
-## Screenshots
-
-*(Insert Burp request captures, login pages, and flag displays here.)*
-
 ---
 
 ## Observations
