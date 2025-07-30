@@ -1,0 +1,47 @@
+# Advent of Cyber – Day 14: Certificate Mismanagement
+
+## Lab Setup
+
+- Attacker VM: TryHackMe AttackBox  
+- Target URL: https://gift-scheduler.thm  
+
+---
+
+## Tasks & Answers
+
+1. Capture and inspect the TLS certificate  
+   
+   - Certificate Authority: THM  
+
+2. Retrieve elf credentials from Burp HTTP history  
+   
+   - Username: snowballelf  
+   - Password: c4rrotn0s3  
+
+3. Log in as an elf and capture the flag  
+   
+   - Flag: THM{AoC-3lf0nth3Sh3lf}  
+
+4. Harvest the mayor’s account credentials  
+   
+   - Username: marta_mayware  
+   - Password: H0llyJ0llySOCMAS!  
+
+5. Access the admin console and retrieve the final flag  
+   
+   - Flag: THM{AoC-h0wt0ru1nG1ftD4y}  
+
+---
+
+## Screenshots
+
+*(Insert Burp request captures, login pages, and flag displays here.)*
+
+---
+
+## Observations
+
+- Burp Suite’s HTTP history reveals hidden POST parameters and credentials.  
+- Inspecting the TLS certificate confirms you’re interacting with the genuine Gift Scheduler service.  
+- Certificate mismanagement allowed a predictable CA name and facilitated easy spoofing.  
+- Credential reuse and lack of strong certificate validation lead to full system compromise.  
