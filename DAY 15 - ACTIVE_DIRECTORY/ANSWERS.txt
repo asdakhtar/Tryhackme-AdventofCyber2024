@@ -1,0 +1,46 @@
+# Day 15: Active Directory Exploration
+
+Dive into the Windows domain environment, explore event logs, PowerShell history, and Group Policy to answer the challenge questions below.
+
+---
+
+## Environment Setup
+
+- Domain controller (DC) joined to `corp.local`  
+- Security logs enabled for successful logon events  
+- PowerShell module for Active Directory installed  
+- A user named **Glitch_Malware** created for testing  
+
+---
+
+## Tasks
+
+1. Open **Event Viewer** on the DC.  
+2. Navigate to **Windows Logs → Security** and filter for logon events.  
+3. Review **Application and Services Logs → Windows PowerShell**.  
+4. Launch **Group Policy Management Console (GPMC)**.  
+
+---
+
+## Questions
+
+1. On what day was **Glitch_Malware** last logged in?  
+   Answer format: DD/MM/YYYY
+
+2. What **Event ID** shows the login of the **Glitch_Malware** user?
+
+3. Read the PowerShell history of the **Administrator** account. What command was used to enumerate Active Directory users?
+
+4. Look in the Windows PowerShell log file. What was **Glitch_Malware**’s set password?
+
+5. Review the list of linked GPOs in GPMC. What is the name of the installed GPO that the attacker used for persistence?
+
+---
+
+## Correct Answers
+
+1. 07/11/2024  
+2. 4624  
+3. Get-ADUser -Filter * -Properties MemberOf \| Select-Object Name  
+4. SuperSecretP@ssw0rd!  
+5. Malicious GPO - Glitch_Malware Persistence  
