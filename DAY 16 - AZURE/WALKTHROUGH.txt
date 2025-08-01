@@ -1,0 +1,74 @@
+
+---
+
+# 🔐 Advent of Cyber 2024 — Day 16 Walkthrough: Azure Key Vault Secrets
+
+**Challenge Theme:** Cloud Security  
+**Target Focus:** Azure Vault Secret Enumeration and Recovery
+
+---
+
+## 🧭 Overview
+
+In this challenge, we explored Azure Key Vault misconfigurations that exposed sensitive secrets. The scenario involved a fictional company named *BackupWare* that had accidentally leaked credentials within its Azure environment.
+
+---
+
+## 🕵️‍♂️ Enumeration Steps
+
+### 🔹 Step 1: Accessing the Azure Vault  
+Using the provided credentials or endpoint, we began enumerating the Azure Vault service via CLI or browser interface. Key points:
+
+- **Vault URL** was accessible due to loose permissions.
+- No IP restrictions or role-based access controls were enforced.
+
+### 🔹 Step 2: Identifying Secret Groups  
+We discovered a secret group named:
+
+```txt
+Group ID: 7d96660a-02e1-4112-9515-1762d0cb66b7
+```
+
+This group held a sensitive recovery secret linked to the BackupWare infrastructure.
+
+### 🔹 Step 3: Listing Vault Secrets  
+Using CLI or the Azure portal, we listed available secrets and found:
+
+```txt
+Secret Name: aoc2024
+```
+
+### 🔹 Step 4: Revealing the Secret  
+Retrieving the value revealed highly sensitive content:
+
+```txt
+Secret Value: WhereIsMyMind1999
+```
+
+This was likely a production recovery key or backup credential.
+
+---
+
+## 🔑 Challenge Questions & Answers
+
+| Question                                         | Answer                              |
+|--------------------------------------------------|--------------------------------------|
+| What is the password for BackupWare that was leaked? | `R3c0v3r_s3cr3ts!`                  |
+| What is the group ID of the Secret Recovery Group?  | `7d96660a-02e1-4112-9515-1762d0cb66b7` |
+| What is the name of the vault secret?              | `aoc2024`                            |
+| What are the contents of the secret stored in the vault? | `WhereIsMyMind1999`                |
+
+---
+
+## 🛡️ Lessons Learned
+
+- Always apply strict role-based access control on sensitive Azure resources.
+- Rotate secrets periodically and ensure audit logging is enabled.
+- Use network-level restrictions and conditional access policies to limit exposure.
+
+---
+
+.
+
+---
+
