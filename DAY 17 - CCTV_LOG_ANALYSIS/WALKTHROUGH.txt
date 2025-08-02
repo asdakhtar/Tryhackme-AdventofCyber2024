@@ -1,0 +1,55 @@
+---
+
+## 🎥 Day 17 – Watching You: CCTV Footage Tampering
+
+### 🕵️ Scenario Recap
+A suspicious deletion of CCTV footage triggered an investigation. Our job: trace the attacker’s movements across web logs, session data, and camera feeds, uncover their identity, and understand how they bypassed security measures.
+
+---
+
+### 📁 Logs Analyzed
+- `web_logs`
+- `cctv_logs`
+- `cctv_feed`
+- `session_id`
+- `ips`
+
+---
+
+### 🔍 Timeline of Events
+1. **Brute Force Attempts**  
+   Numerous failed login attempts spotted in the `web_logs` — classic brute-force behavior against multiple accounts.
+
+2. **Successful Login Detected**  
+   Among the chaos, one session successfully authenticated. From `cctv_feed`, we matched **642 logs** tied to this login session — strong indicator of post-login activity.
+
+3. **Camera Stream Access**  
+   The attacker watched several CCTV feeds. Live stream playback events and clip downloads were recorded in `cctv_feed`.
+
+4. **Stream Downloads Initiated**  
+   We found evidence of multiple streams being downloaded — sign of possible offline footage tampering or exfiltration.
+
+5. **Footage Deletion**  
+   `cctv_logs` revealed deletion events. Linking timestamps, we correlated these actions to the attacker’s session ID and IP.
+
+6. **IP & Session Correlation**  
+   The attacker’s IP was linked to **three session IDs**. We traced these sessions back to `cctv_feed` and `web_logs`.
+
+---
+
+### 🔗 Key Artifacts
+| Data Point                      | Value                                |
+|--------------------------------|--------------------------------------|
+| **Session ID (Attacker)**      | `rij5uu4gt204q0d3eb7jj86okt`         |
+| **Name (from cctv_feed logs)** | `mmalware`                           |
+| **Successful Login Logs**      | `642 entries in cctv_feed`           |
+
+---
+
+### 🧠 Analyst Takeaways
+- **Log correlation** across feed types is essential — don't overlook session IDs and matching timestamps.
+- **IP reuse** often reveals hidden session activity. Chaining across users can expose attacker pivots.
+- **Footage deletion actions** often mimic normal admin behavior, so pattern matching post-authentication events is key.
+
+---
+
