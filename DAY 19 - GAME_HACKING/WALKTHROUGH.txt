@@ -1,0 +1,54 @@
+---
+
+## 🕹️ Advent of Cyber — Day 19: Game Hacking Walkthrough
+
+### 🎯 Challenge Focus
+In this challenge, we explored how game mechanics and client-side values can be manipulated to bypass security mechanisms and gain unauthorized advantages — a critical concept in understanding both ethical hacking and game integrity testing.
+
+### 🔍 Key Techniques Demonstrated
+- Memory manipulation using browser dev tools
+- Inspecting DOM elements and variables
+- Modifying in-game values such as OTPs, items, and biometric factors
+- Logical deduction and flag discovery through in-browser inspection
+
+---
+
+## 🔐 Step-by-Step Walkthrough
+
+### ✅ Step 1: **Obtaining the OTP Flag**
+- Navigated to the login interface simulating an OTP verification.
+- Opened **Developer Tools (F12)** and inspected the JavaScript.
+- Located the hardcoded OTP or reference variable storing it.
+- Entered the correct OTP in the form.
+
+> 🔖 Flag: `THM{one_tough_password}`
+
+---
+
+### 💳 Step 2: **Finding the Billionaire Item Flag**
+- Started a game level that involved buying premium in-game items.
+- Triggered a transaction using a dummy credit card.
+- Observed in the console that the item flag variable was set upon transaction.
+- Alternatively, changed item price or approval state in browser memory.
+
+> 🔖 Flag: `THM{credit_card_undeclined}`
+
+---
+
+### 🧬 Step 3: **Extracting the Biometric Flag**
+- Accessed a level featuring biometric lockout or keyboard smash simulation.
+- Noticed a UI element that prompted erratic key presses.
+- Traced the validation script and identified a static flag or behavior trigger.
+- Simulated or bypassed the condition with dev tools manipulation.
+
+> 🔖 Flag: `THM{dont_smash_your_keyboard}`
+
+---
+
+## 📘 Key Learnings
+- Never trust the client! Values stored or validated client-side can be inspected, modified, and exploited.
+- Game hacking principles mirror real-world attack surfaces — from web apps to authentication protocols.
+- Ethical hacking allows us to explore these weaknesses to build safer, more secure systems.
+
+---
+
