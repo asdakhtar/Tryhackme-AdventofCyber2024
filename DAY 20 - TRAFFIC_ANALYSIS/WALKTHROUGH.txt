@@ -1,0 +1,75 @@
+---
+
+## 🕵️ Day 20 Walkthrough – Mayor Malware’s C2 Investigation
+
+### 🗒️ Overview
+The challenge revolves around analyzing communications between a compromised machine and a Command & Control (C2) server operated by the nefarious Mayor Malware. You'll review C2 traffic, identify key indicators, and trace data exfiltration.
+
+---
+
+### 🧩 Step-by-Step Analysis
+
+#### 1. 🔍 Initial Payload Communication
+- **Objective**: Identify the first message sent by the payload.
+- **Method**: Analyze PCAP or C2 logs using Wireshark or Splunk.
+- **Finding**:  
+  ```
+  "I am in Mayor!"
+  ```
+- **Interpretation**: Confirms successful callback—target is now under control.
+
+---
+
+#### 2. 🌐 C2 Server IP Address
+- **Objective**: Determine where the target machine connected.
+- **Finding**:  
+  ```
+  10.10.123.224
+  ```
+- **Notes**: Internal IP used within simulation; acts as control node.
+
+---
+
+#### 3. 💻 Command Executed
+- **Objective**: What command did the C2 issue after the payload connected?
+- **Finding**:  
+  ```
+  whoami
+  ```
+- **Analysis**: Standard enumeration to verify access privileges of compromised system.
+
+---
+
+#### 4. 🗄️ Critical File Exfiltrated
+- **Objective**: Locate the file transferred from the target system.
+- **Finding**:  
+  ```
+  credentials.txt
+  ```
+- **Notes**: Contains sensitive data—ideal trophy for an attacker.
+
+---
+
+#### 5. 🔐 Encrypted Beacon Message
+- **Objective**: What hidden message was sent back from target to C2?
+- **Finding**:  
+  ```
+  THM_Secret_101
+  ```
+- **Interpretation**: Proof of concept for encrypted exfiltration techniques.
+
+---
+
+### 📁 Suggested GitHub Repo Structure
+```
+└── AdventOfCyber2025/
+    └── Day20_C2Investigation/
+        ├── README.md
+        ├── screenshots/
+        │   ├── payload_callback.png
+        │   ├── whoami_command.png
+        └── analysis.md
+```
+
+---
+
