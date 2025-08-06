@@ -1,0 +1,67 @@
+
+---
+
+## 🕵️‍♂️ **Day 21 Walkthrough – WarevilleApp.exe Reverse Engineering**
+
+### 🧩 **Objective:**  
+Analyze the behavior of `WarevilleApp.exe`, identify its download and execution flow, and trace its interaction with C2 infrastructure.
+
+---
+
+### 🔍 **Step-by-Step Analysis**
+
+#### ✅ **1. What is the function name that downloads and executes files in WarevilleApp.exe?  
+**Answer:** `DownloadAndExecuteFile`
+
+- **How to find it:**  
+  - Open `WarevilleApp.exe` in **Ghidra** or **iLSpy**.
+  - Look for function calls related to `WebClient`, `DownloadFile`, or `Process.Start`.
+  - The function `DownloadAndExecuteFile` contains logic to fetch and run the second-stage binary.
+
+---
+
+#### ✅ **2. What is the name of the binary downloaded after running WarevilleApp.exe?  
+**Answer:** `explorer.exe`
+
+- **Behavior:**  
+  - Upon execution, `WarevilleApp.exe` downloads `explorer.exe` to the **Downloads** folder.
+  - This binary is the **second stage payload**.
+
+---
+
+#### ✅ **3. What domain name is used to download the file?  
+**Answer:** `mayorc2.thm`
+
+- **How to confirm:**  
+  - Inspect network traffic using **Wireshark** or **Procmon**.
+  - Look for HTTP GET requests or DNS queries.
+  - The domain `mayorc2.thm` is contacted to fetch `explorer.exe`.
+
+---
+
+#### ✅ **4. What is the name of the zip file created by the stage 2 binary?  
+**Answer:** `CollectedFiles.zip`
+
+- **Behavior:**  
+  - `explorer.exe` collects system data (e.g., documents, screenshots, logs).
+  - It compresses the data into `CollectedFiles.zip` before attempting exfiltration.
+
+---
+
+#### ❓ **5. What is the name of the C2 server where the stage 2 binary tries to upload files?  
+**Answer:** *(Pending – not yet answered)*
+
+- **Hint:**  
+  - Monitor outbound traffic after `CollectedFiles.zip` is created.
+  - Look for POST requests or FTP/SFTP uploads.
+  - Use tools like **Wireshark**, **Fiddler**, or **Procmon** to trace the destination.
+
+---
+
+### 🧠 **Tools Used**
+- iLSpy – for static analysis
+- pestudio 
+- TryHackMe VM – for safe execution and observation
+
+---
+
