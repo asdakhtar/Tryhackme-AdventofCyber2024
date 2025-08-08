@@ -1,0 +1,125 @@
+---
+
+## 1. Environment Setup and Context
+
+We assume you have `kubectl` access to the target cluster in the `nicetown` namespace. The pod under investigation is named `mayor-app-5d5b6d7f7f-abcde`.
+
+- Ensure you have cluster-admin or sufficient privileges to inspect pods, logs, and secrets.  
+- Confirm the pod is running:  
+  ```bash
+  kubectl get pods -n nicetown
+  ```
+
+---
+
+## 2. Discovering the Webshell
+
+1. Attach a shell or list files in the container:  
+   ```bash
+   kubectl exec -n nicetown mayor-app-5d5b6d7f7f-abcde -- ls /var/www/html
+   ```
+2. Look for suspicious PHP scripts:  
+   ```bash
+   kubectl exec -n nicetown mayor-app-... -- grep -R "<?=.*system" /var/www/html
+   ```
+3. The output reveals `shelly.php`—our webshell.  
+
+---
+
+## 3. Identifying Files Read by the Malware
+
+1. Check process invocations in logs:  
+   ```bash
+   kubectl logs -n nicetown mayor-app-...
+   ```
+2. Search for file-read calls:  
+   ```bash
+   grep -R "file_get_contents" -n ~/mayor-logs
+   ```
+3. You’ll spot `db.php` being pulled into memory—used to harvest database credentials.
+
+---
+
+## 4. Spotting Remote-Connection Tools
+
+1. Inspect the container’s filesystem for networking binaries:  
+   ```bash
+   kubectl exec -n nicetown mayor-app-... -- ls /bin /usr/bin
+   ```
+2. Search logs for execution attempts:  
+   ```bash
+   grep -R "\bnc\b" -n ~/mayor-logs
+   ```
+3. The binary `nc` (netcat) is invoked for reverse shells.
+
+---
+
+## 5. Analyzing Docker Registry Access
+
+### 5.1 Extract Registry Logs
+
+1. Access the registry logs (host path or via SSH):  
+   ```bash
+   sudo tail -n 200 /var/log/registry/registry.log
+   ```
+
+### 5.2 Find Unexpected IP
+
+- Grep for any IP outside known build agents:  
+  ```bash
+  grep "10.10.130." /var/log/registry/registry.log | awk '{print $1}' | sort -u
+  ```
+- The IP `10.10.130.253` stands out as unauthorized.
+
+### 5.3 Timestamp of First Pull
+
+- Isolate first pull event from that IP:  
+  ```bash
+  grep "10.10.130.253" registry.log | grep "pull" | head -1
+  ```
+- The timestamp reads `29/Oct/2024:10:06:33 +0000`.
+
+### 5.4 Timestamp of Push
+
+- Locate the push of the malicious image:  
+  ```bash
+  grep "10.10.130.253" registry.log | grep "push" | tail -1
+  ```
+- That shows `29/Oct/2024:12:34:28 +0000`.
+
+---
+
+## 6. Retrieving the pull-creds Secret
+
+1. Export the secret in JSON form:  
+   ```bash
+   kubectl get secret pull-creds -n nicetown -o json > pull-creds.json
+   ```
+2. Decode the base64 fields:  
+   ```bash
+   jq '.data | map_values(@base64d)' pull-creds.json
+   ```
+3. The decoded secret contains:
+   ```json
+   {
+     "auths": {
+       "http://docker-registry.nicetown.loc:5000": {
+         "username": "mr.nice",
+         "password": "Mr.N4ughty",
+         "auth": "bXIubmljZTpNci5ONHVnaHR5"
+       }
+     }
+   }
+   ```
+
+---
+
+## 7. Lessons Learned and Next Steps
+
+- Rotate compromised credentials and revoke the `pull-creds` secret.  
+- Audit all container images for backdoors and rebuild from trusted sources.  
+- Implement network policies to restrict registry access to known build systems.  
+- Enforce Pod Security Policies to block netcat and other shell binaries in production containers.  
+
+---
+
