@@ -1,0 +1,43 @@
+---
+
+## 🎄 Advent of Cyber – Day 23: Hash Cracking & Hidden Flags
+
+### 🧩 Challenge Summary  
+We were provided with a file named `hash1.txt` containing a hashed value. The task was to crack the hash and identify the original password. Once cracked, we were to explore a `private.pdf` file and retrieve the hidden flag.
+
+---
+
+### 🔍 Step 1: Crack the Hash  
+The hash stored in `hash1.txt` was:
+
+```
+$6$rounds=5000$...
+```
+
+This format indicates a **SHA-512 crypt hash**, commonly used in Linux shadow files.
+
+#### ✅ Cracked Password:
+```
+fluffycat12
+```
+
+Tool used: `hashcat` or `john` with appropriate wordlists and hash mode.
+
+---
+
+### 📂 Step 2: Extract the Flag from private.pdf  
+After cracking the password, we accessed `private.pdf`. The flag was embedded at the top of the document.
+
+#### 🏁 Flag:
+```
+THM{do_not_GET_CAUGHT}
+```
+
+---
+
+### 🛠️ Tools Used
+- `john` or `hashcat` for hash cracking  
+- `strings`, `pdf-parser`, or manual inspection for PDF analysis
+
+---
+
