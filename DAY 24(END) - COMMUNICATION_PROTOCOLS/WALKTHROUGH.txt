@@ -1,0 +1,89 @@
+---
+
+## 🧠 Challenge Summary: MQTT Protocol & Packet Analysis
+
+Mayor Malware disrupted the lighting system. Your mission:  
+- Analyze MQTT traffic in `challenge.pcapng`  
+- Identify the correct **topic** and **message** to publish  
+- Use `mosquitto_pub` to send the command  
+- Restore the lights and retrieve the flag
+
+---
+
+## 🔍 Step-by-Step Walkthrough
+
+### 1. **Run the Simulation**
+```bash
+cd ~/Desktop/MQTTSIM/challenge/
+./challenge.sh
+```
+This launches:
+- MQTT broker
+- Lights controller interface
+- Background services
+
+---
+
+### 2. **Open Wireshark and Load the PCAP**
+```bash
+wireshark challenge.pcapng
+```
+Filter for MQTT traffic:
+```text
+mqtt
+```
+
+Look for **PUBLISH** messages with payloads like `"on"` or `"off"` and note the **topic** used.
+
+🧠 Example you might’ve seen:
+- Topic: `factory/lighting/main`
+- Message: `on`
+
+---
+
+### 3. **Publish the Correct MQTT Message**
+Once you’ve identified the topic and payload, use:
+```bash
+mosquitto_pub -h localhost -t "d2FyZXZpbGxl/Y2hyaXN0bWFzbGlnaHRz" -m "on"
+```
+
+This sends the “on” command to all devices subscribed to that topic.
+
+---
+
+### 4. **Lights Turn On & Flag Appears**
+After publishing, the lights controller interface updates and displays the flag.
+
+✅ Example Flag:
+```text
+THM{Ligh75on-day54ved}
+```
+
+---
+
+## 🧾 Sample Write-Up Snippet for GitHub
+
+```markdown
+### Day 24 - MQTT Lights Challenge
+
+**Objective:** Analyze MQTT traffic to restore lighting systems sabotaged by Mayor Malware.
+
+**Tools Used:** Wireshark, mosquitto_pub
+
+**Steps:**
+1. Ran `challenge.sh` to simulate the environment.
+2. Opened `challenge.pcapng` in Wireshark and filtered for MQTT traffic.
+3. Identified the topic `factory/lighting/main` and message `on`.
+4. Published the message using:
+   ```bash
+   mosquitto_pub -h localhost -t "factory/lighting/main" -m "on"
+   ```
+5. Lights turned on and flag appeared:  
+   `THM{Ligh75on-day54ved}`
+
+**Skills Practiced:**  
+- MQTT protocol analysis  
+- Packet inspection  
+- Command-line publishing  
+- Real-world IoT troubleshooting
+```
